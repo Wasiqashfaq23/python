@@ -128,35 +128,43 @@ print("🔁 Or type 'Hint' to use a Hint")
 print("🚪 Or type 'quit' to walk away")
 print("==========================================")
 i=1
-for x in range(0,10):
-    print(f"\nQuestion {i} for Rs{prizes[x]}")        
-    print(f"Question {i} on screen now\n\n{questions[x]}")
-    print(options[x])
-    response=(input("Enter your answer as per options: "))
+hint=0
+for iteration in range(len(questions)):
+    print(f"\nQuestion {i} for Rs{prizes[iteration]}")        
+    print(f"Question {i} on screen now\n\n{questions[iteration]}")
+    print(options[iteration])
+    response=(input("Enter your answer as per options: ")).strip().lower()
     if(response=="quit"):
         break
-    if(response=="hint"):
-        print(f"Your hint is {hints[i]}")
-    else:
-        if(response==answers[x]):
-            print(f"Congratulations u won {prizes[x]}")
-            prize_won=prizes[x]
-            if(prize_won==prizes[5] or prize_won==prizes[7]):
-                print("Checkpoint reached")
-                checkpoint+=1
-            elif(prize_won==prizes[9]):
-                prizes("You won the Jackpot congratulations on winning a 100000RS")
-                quit()
-        else:
-            print("Sorry your answer is wrong!")
-            print("Correct answer is",answers[x])
-            if(checkpoint==0):
-                print("Sorry u got no money")
-            elif(checkpoint==1):
-                print("You got 33,000")
-            else:
-                print("You got 66,000")
+    if(response=="hint" and hint<2):
+        print(f"Your hint is {hints[iteration]}")
+        response=input("Enter your respose now: ").strip().lower()
+    elif(response=="hint" and hint==2):
+        print("Sorry u ran out of Hints")
+        response=input("Enter your respose now: ").strip().lower()
+
+    ans_lower=answers[iteration]
+    if(response==ans_lower.lower()):
+        print(f"Congratulations u won {prizes[iteration]}")
+        prize_won=prizes[iteration]
+        if(prize_won==prizes[5] or prize_won==prizes[7]):
+            print("Checkpoint reached")
+            checkpoint+=1
+        elif(prize_won==prizes[9]):
+            print("You won the Jackpot! Congratulations on winning a 100,00RS")
             quit()
+    else:
+        print("Sorry your answer is wrong!")
+        print("Correct answer is",answers[iteration])
+        if(checkpoint==0):
+            print("Sorry u got no money")
+        elif(checkpoint==1):
+            print("You got 33,000")
+        else:
+            print("You got 66,000")
+        quit()
+
     i+=1
+    hint+=1
 
             
